@@ -22,16 +22,16 @@ def decompile_replay(replay_path):
         buf = f.read()
     return parse_replay(buf)
 
-
-def analyze_replay_file(replay_path: str, controls: ControlsCreator = None,
+def analyze_replay_file(replay_path: str=None, replay_json=None, controls: ControlsCreator = None,
                         sanity_check: SanityChecker = None, analysis_per_goal=False,
                         logging_level=logging.NOTSET,
                         calculate_intensive_events: bool = False,
                         clean: bool = True):
     """
-    Decompile and analyze a replay file.
+    Decompile and analyze a replay file. NOTE: Either replay_path or replay_json must be given.
 
     :param replay_path: Path to replay file
+    :param replay_json: the JSON data already parsed
     :param controls: Generate controls from the replay using our best guesses (ALPHA)
     :param sanity_check: Run sanity check to make sure we analyzed correctly (BETA)
     :param analysis_per_goal: Runs the analysis per a goal instead of the replay as a whole
@@ -45,7 +45,16 @@ def analyze_replay_file(replay_path: str, controls: ControlsCreator = None,
     if logging_level != logging.NOTSET:
         logging.getLogger('carball').setLevel(logging_level)
 
-    _json = decompile_replay(replay_path)
+    #JHS added to split off boxcar_py
+    if replay_path == None and replay_json == None:
+        raise ValueError('replay_path OR replay_json must be provided.')
+    elif replay_path != None and replay_json != None: 
+        raise ValueError('Only one of replay_path or replay_json should be provided.')
+    elif replay_path != None and replay_json == None:
+        _json = decompile_replay(replay_path) 
+    elif replay_path == None and replay_json != None:
+        _json = replay_json
+
     game = Game()
     game.initialize(loaded_json=_json)
     # get_controls(game)  # TODO: enable and optimise.
