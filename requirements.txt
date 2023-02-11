@@ -1,5 +1,5 @@
 numpy==1.24.2
-protobuf==3.6.1
+protobuf==4.21.12
 pandas==1.5.3
 xlrd==1.1.0
 boxcars-py==0.1.*
