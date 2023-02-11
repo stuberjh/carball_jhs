@@ -73,6 +73,7 @@ def analyze_replay_file(replay_path: str=None, replay_json=None, controls: Contr
 
 
 if __name__ == '__main__':
-    from carball.tests.analysis_test import __test_replays
+    print('did this work?')
+    # from carball.tests.analysis_test import __test_replays
 
-    __test_replays(BASE_DIR)
+    # __test_replays(BASE_DIR)

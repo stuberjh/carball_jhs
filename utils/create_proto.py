@@ -52,7 +52,10 @@ def get_dir():
 
 
 def get_deepness(top_level_dir, path_list):
-    return len(path_list) - path_list.index(top_level_dir)
+    try: 
+        return len(path_list) - path_list.index(top_level_dir)
+    except: 
+        return None
 
 
 def get_file_list(top_level_dir, exclude_dir=None, file_extension='.py'):
@@ -66,6 +69,7 @@ def get_file_list(top_level_dir, exclude_dir=None, file_extension='.py'):
             continue
         path_list = split_to_list(path)
         deepness = get_deepness(top_level_dir, path_list)
+        if deepness is None: continue
         left_over_paths = path_list[-deepness:]
         path_lists.append((path, deepness, left_over_paths))
     for path_item in path_lists:
