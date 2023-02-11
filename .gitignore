@@ -1,7 +1,7 @@
 .idea/
 *.pyc
 replays/
-venv/
+.venv/
 /**/generated/**/*.py
 output
 .env
